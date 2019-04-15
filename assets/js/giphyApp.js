@@ -47,6 +47,7 @@ function getGif(topic) {
         // check to see if valid results
         if (result.meta.msg === "OK") {
             $("#gifBox").empty(); // get rid of previous gifs
+            $("#gifBox").css("background", "black");  // reset background to black
             // Process the gifs
             for ( var i = 0; i < noGifs ; i++) {
                 var newImg = $("<img src='" + result.data[i].images.fixed_height_still.url + "'>");
@@ -55,7 +56,20 @@ function getGif(topic) {
                 newImg.attr("data-motion", "still");
                 var newGif = $("<div class='gifImage'>");
                 newGif.append(newImg);
-                $("#gifBox").append( newGif);
+                
+                // add rating information
+                var newDiv = $("<div class='imgDiv'>");
+                var imgBox = $("<h6>");
+                imgBox.text("Rating: " + result.data[i].rating);
+                // add favorites button
+                var newButton = $("<button class='btn btn-dark favButton'>");
+                newButton.text("Favorite");
+                newButton.attr("data-value", topic);
+                newDiv.append(imgBox).append(newButton);
+                // append
+                newGif.append(newDiv);
+                // append 
+                $("#gifBox").append(newGif);
             }
             // add event listeners on image to change from still to moving
             $(".gifImage").on("click", function (){
@@ -72,16 +86,19 @@ function getGif(topic) {
                 }
 
             });
+            // add event listeners on favorites button
+            
         } else {
             // bad data get, log but don't report to user
-            console.log("Bad return from giiphy");
+            console.log("Bad return from giphy");
             console.log(result);
         }
     });
 }
 
+
 createButtons();
 
-// getGif("kittens");
+// set event listener on the input form
 
 }); // end document ready

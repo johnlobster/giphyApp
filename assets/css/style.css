@@ -1,5 +1,8 @@
 /* Styles for giphy api */
 
+#titleBox {
+    background: lightgray;
+}
 .myButton {
     margin: 0.3rem;
 }
@@ -7,4 +10,15 @@
 .gifImage {
     margin: 0.5rem;
     float:left;
+}
+
+#gifBox {
+    background: black;
+
+}
+
+.imgDiv {
+    color: white;
+    width: 200px;
+    float:none;
 }

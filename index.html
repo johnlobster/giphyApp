@@ -15,19 +15,28 @@
 </head>
 <body>
     <div class="container container-fluid">
-        <div class="row"> <!-- Title -->
+        <div class="row" id="titleBox"> <!-- Title -->
             <h2>Giphy reading App</h2>
         </div>
         <div id="buttonsDiv" class="row">
 
         </div>
         <div class="row">
-            <div id="gifBox" class="col-12 col-md-8"> <!-- box for gifs-->
+            <div id="gifBox" class="col-12 col-md-9" style="background:white;"> <!-- box for gifs-->
 
             </div>
-            <div id="queryBox" class="col-12 col-md-4">
-
+            <div id="queryBox" class="col-12 col-md-3"> <!--add new topics via a form-->
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Type to create new button</label>
+                        <input class="form-control" type="text" id="exampleFormControlTextarea1" rows="1"></input>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">submit</button>
+                </form>
             </div>
+        </div>
+        <div id="favoritesBox">
+            <h4>Favorites</h4>
         </div>
     </div>
    
