@@ -1,0 +1,10 @@
+/* Styles for giphy api */
+
+.myButton {
+    margin: 0.3rem;
+}
+
+.gifImage {
+    margin: 0.5rem;
+    float:left;
+}
