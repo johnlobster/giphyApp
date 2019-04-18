@@ -112,6 +112,8 @@ function createButtons() {
     $(".myButton").on("click", function() {
         var myValue = $(this).attr("data-value");
         getGif(myValue);
+        
+        
     });
 }
 
@@ -172,8 +174,14 @@ createButtons();
 // set event listener on the input form
 $("#newButton").on("click", function (event) {
     event.preventDefault(); // stop it from posting
-    allButtons.push($("#inputTextBox").val().trim());
-    createButtons();
+    var inputVal = $("#inputTextBox").val().trim();
+    // don't add button if blank, or already present
+    if (( inputVal !== "") && ( ! allButtons.includes(inputVal))) {
+        allButtons.push(inputVal);
+        createButtons();
+    }
+    // clear the input text box
+    $("#inputTextBox").val("");
 });
 
 // showFavorites after all the events have been set up
