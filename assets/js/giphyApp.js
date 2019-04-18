@@ -9,12 +9,34 @@ var allButtons = [
     "dogs",
     "puppies",
     "bunnies",
+    "minions",
     "cute"
 ];
 
+
 var apiKey = "E86wu8MFEDRrDhlagTwJMtqUO52e5tkE";
-var noGifs = 6;
+var noGifs = 6; // show 6 gifs
 // functions
+
+// store and retrieve saved favorites
+function saveFavorites () {
+    localStorage.setItem("giphyFavorites", JSON.stringify($("#favoritesBox").html()));
+    // console.log( "stored " + localStorage.getItem("giphyFavorites"));
+}
+function showFavorites () {
+    if (localStorage.getItem("giphyFavorites") !== "") {
+        // change colors
+        $("#favoritesHeader").css("background", "black");
+        $("#favoritesHeader").find("h4").css("color", "white");
+        $("#favoritesBox").css("background", "black");
+        // put back the saved html
+        $("#favoritesBox").html(JSON.parse(localStorage.getItem("giphyFavorites")));
+    }
+    
+}
+
+
+
 
 // creates the buttons that user will press to find gifs
 function createButtons() {
@@ -37,7 +59,10 @@ function createButtons() {
     });
 }
 
+function createEvents() {
 
+}
+createEvents();
 // create AJAX call to get data from giphy and display results
 function getGif(topic) {
     var myUrl = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + 
@@ -54,8 +79,10 @@ function getGif(topic) {
                 newImg.attr("data-still", result.data[i].images.fixed_height_still.url);
                 newImg.attr("data-moving", result.data[i].images.fixed_height.url);
                 newImg.attr("data-motion", "still");
+                newImg.addClass("clickableImage");
                 var newGif = $("<div class='gifImage'>");
                 newGif.append(newImg);
+                // newGif.attr("id", )
                 
                 // add rating information
                 var newDiv = $("<div class='imgDiv'>");
@@ -72,9 +99,13 @@ function getGif(topic) {
                 $("#gifBox").append(newGif);
             }
             // add event listeners on image to change from still to moving
-            $(".gifImage").on("click", function (){
-                var myImg = $(this).children("img");
-                console.log(myImg);
+            // attaching event listener to document to catch favorites as they are added
+            // have to delete previous as it was adding them twice
+            $(document).off("click",".clickableImage");
+            $(document).on("click",".clickableImage", function (){
+                // var myImg = $(this).children("img");
+                var myImg = $(this);
+                console.log("clickable image" + myImg);
                 // toggle whether gif is moving or not
                 if ( myImg.attr("data-motion") === "still") {
                     myImg.attr("data-motion","moving");
@@ -86,7 +117,35 @@ function getGif(topic) {
                 }
 
             });
-            // add event listeners on favorites button
+            // add event listeners on favorites buttons, add favorites to bottom
+            // clone the whole gif+text and add into the favorites box
+            $(".favButton").on("click", function() {
+                // button is what was clicked, grab the grandparent, this is what we will copy
+                var myGif = $(this).parent().parent();
+                // console.log( "myGif= " + myGif);
+                // copy
+                var newGif = myGif.clone();
+                // change text on button
+                var myButton = newGif.find("button");
+                myButton.text("remove");
+                myButton.removeClass("favButton");
+                myButton.addClass("removeButton");
+                // when has gifs in it, background needs to be black, and text white
+                $("#favoritesHeader").css("background", "black");
+                $("#favoritesHeader").find("h4").css("color", "white");
+                $("#favoritesBox").css("background", "black");
+                $("#favoritesBox").append( newGif);
+                // save the favorites
+                saveFavorites();
+                // add event listeners for remove button (remove first so don't get multiple events)
+                $(".removeButton").off("click");
+                $(".removeButton").on("click", function() {
+                    // console.log("remove button");
+                    $(this).parent().parent().empty();
+                });
+
+                // console.log( JSON.stringify( newGif));
+            });
             
         } else {
             // bad data get, log but don't report to user
@@ -100,5 +159,13 @@ function getGif(topic) {
 createButtons();
 
 // set event listener on the input form
+$("#newButton").on("click", function (event) {
+    event.preventDefault(); // stop it from posting
+    allButtons.push($("#inputTextBox").val().trim());
+    createButtons();
+});
+
+// showFavorites after all the events have been set up
+showFavorites();
 
 }); // end document ready
