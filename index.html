@@ -17,6 +17,33 @@
     <div class="container container-fluid">
         <div class="row" id="titleBox"> <!-- Title -->
             <h2>Giphy reading App</h2>
+            <button class="btn btn-primary btn-lg ml-3" id="instructionsButton" data-toggle="modal" data-target="#instructionsModal">
+                Information</button>
+            <!-- Instructions are a bootstrap modal   -->
+            <div class="modal fade" id="instructionsModal" tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Information</h5>
+                            <button type="button" class="close" id="closeInstructions1" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-left">
+                            <p> This is a gif viewer that fetches gifs on a topic from giphy.com</p>
+                            <p> each topic has a button, click on the button to see gifs on that topic</p>
+                            <p> A still image for each gif is shown, to start the gif moving, click on the image</p>
+
+                            <p> New topics can be added using the text box marked 'Type to create new button'. This creates the new button, which needs to be clicked to see gifs on that topic</p>
+                            <p> Click the favorites button underneath each image to add the image into the favorites section. Favorite images persist from session to session. Click on the remove button if you don't want that image in favorites any more</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeInstructions2" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="buttonsDiv" class="row">
 
@@ -38,10 +65,8 @@
         <div id="favoritesHeader" class="row mt-3">
             <h4 class="p-2">Favorites</h4>
         </div>
-        <div id="favoritesBox" class="row">
-            
-            
-        </div>
+        <div id="favoritesBox" class="row"></div>
+        
     </div>
    
     <script src="assets/js/giphyApp.js"></script>
